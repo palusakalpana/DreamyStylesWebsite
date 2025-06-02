@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: rgb(241, 235, 235);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: linear-gradient(to right, #fec5cc, #ee9ca7);
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+    z-index: 1000;
+}
+
+.back-link {
+    text-decoration: none;
+    color: #ff4d4d;
+    font-size: 24px;
+    transition: color 0.3s;
+}
+
+.back-link:hover {
+    color: #ef3e3e;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+.search-bar {
+    padding: 8px 12px;
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 18px;
+    outline: none;
+    transition: box-shadow 0.3s;
+}
+
+.search-bar:focus {
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.wishlist-icon {
+    cursor: pointer;
+    font-size: 24px;
+    color: #ff4d4d;
+    transition: color 0.3s ease-in-out;
+}
+
+.wishlist-icon:hover {
+    color: #f85e5e;
+}
+        .cart-container {
+            margin-top: 80px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .cart-container:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .cart-list {
+            margin-top: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .cart-item:hover {
+            background: #f1faff;
+        }
+
+        .cart-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            margin-right: 12px;
+            border: 2px solid #ddd;
+        }
+
+        .qty-container {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 8px;
+            padding: 6px;
+        }
+
+        .btn-decrease, .btn-increase {
+            background: #4a9df6;
+            color: white;
+            border: none;
+            padding: 2px 6px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            margin: 0 5px;
+            transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        .btn-decrease:hover, .btn-increase:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .qty-display {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .btn-remove {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .btn-remove:hover {
+            background: #cc0000;
+        }
+
+        .total-amount {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 15px;
+            color: #2c3e50;
+        }
+
+        .empty-cart {
+            color: #888;
+            font-style: italic;
+            font-size: 14px;
+        }
+        .order-actions {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .order-btn, .track-btn {
+        padding: 10px 20px;
+        border: none;
+        background-color: #ff4081;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .order-btn:hover, .track-btn:hover {
+        background-color: #e91e63;
+    }
+    .custom-alert {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px 25px;
+    border: 1px solid #c3e6cb;
+    border-radius: 10px;
+    font-size: 16px;
+    z-index: 9999;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+    animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
+/* Extra Small (XS): Up to 575.98px */
+@media (max-width: 575.98px) {
+    .navbar {
+        flex-direction: row;
+        align-items: center;
+        padding: 8px 10px;
+        font-size: 18px;
+    }
+.back-link{
+    font-size: 18px;
+}
+    .nav-right {
+        flex-direction: row;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .search-bar {
+        width: 80%;
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    .wishlist-icon {
+        font-size: 20px;
+    }
+
+    .cart-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .cart-img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+    }
+
+    .qty-container {
+        margin: 10px 0;
+    }
+
+    .btn-remove {
+        margin-top: 10px;
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+
+    .order-actions {
+        flex-direction: column;
+    }
+
+    .order-btn, .track-btn {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .custom-alert {
+        width: 90%;
+        font-size: 14px;
+    }
+}
+
+
+/* Small (SM): 576px to 767.98px */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .navbar {
+        padding: 8px 15px;
+    }
+
+    .search-bar {
+        width: 180px;
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .wishlist-icon {
+        font-size: 18px;
+    }
+
+    .cart-container {
+        width: 85%;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .cart-img {
+        margin-bottom: 10px;
+        width: 90px;
+        height: 90px;
+    }
+
+    .qty-container {
+        margin: 10px 0;
+    }
+
+    .btn-remove {
+        margin-top: 10px;
+    }
+}
+
+/* Medium (MD): 768px to 991.98px */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .navbar {
+        padding: 10px 20px;
+    }
+
+    .search-bar {
+        width: 200px;
+        font-size: 13px;
+    }
+
+    .cart-container {
+        width: 70%;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .cart-img {
+        margin-bottom: 10px;
+        width: 100px;
+        height: 100px;
+    }
+
+    .qty-container {
+        margin: 10px 0;
+    }
+
+    .btn-remove {
+        margin-top: 10px;
+    }
+}
+
+/* Large (LG): 992px to 1199.98px */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .navbar {
+        padding: 12px 25px;
+    }
+
+    .search-bar {
+        width: 220px;
+    }
+
+    .cart-container {
+        width: 60%;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .cart-img {
+        margin-bottom: 10px;
+    }
+
+    .qty-container {
+        margin: 10px 0;
+    }
+
+    .btn-remove {
+        margin-top: 10px;
+    }
+}
+
+        
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="home.html" class="back-link">← Back to Shop</a>
+        <div class="nav-right">
+            <input type="text" class="search-bar" placeholder="Search for items..." onkeyup="searchItems()">
+            <i class="fa-solid fa-heart wishlist-icon" onclick="redirectToWishlist()"></i>
+        </div>
+    </nav>
+    
+    <!-- Shopping Cart Container -->
+    <div class="cart-container">
+        <h2>Shopping Cart</h2>
+        <div class="cart-list"></div>
+        <p class="total-amount"><strong>Total: $0</strong></p>
+        <div class="order-actions">
+            <button class="order-btn" onclick="placeOrder()">Place Order</button>
+            <button class="track-btn" onclick="trackOrder()">Track Your Order</button>
+        </div>
+        
+        <div class="order-summary" style="margin-top: 20px; display: none;">
+            <h3>🧾 Order Summary</h3>
+            <ul class="order-list"></ul>
+        </div>
+        
+    </div>
+    <div id="custom-alert" style="display: none;" class="custom-alert">
+        <p id="alert-text"></p>
+    </div>
+    
+    <script>
+        let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartList = document.querySelector(".cart-list");
+        const totalAmount = document.querySelector(".total-amount");
+        const searchBar = document.querySelector(".search-bar");
+        const wishlistIcon = document.querySelector(".fa-heart");
+    
+        function updateCart(filteredItems = cartItems) {
+    cartList.innerHTML = "";
+    let total = 0;
+
+    if (filteredItems.length === 0) {
+        cartList.innerHTML = "<p class='empty-cart'>Items not found.</p>";
+    } else {
+        filteredItems.forEach((item) => {
+            if (!item.title || !item.price || !item.image) return;
+
+            const cartItem = document.createElement("div");
+            cartItem.classList.add("cart-item");
+
+            const itemImage = document.createElement("img");
+            itemImage.src = item.image;
+            itemImage.alt = item.title;
+            itemImage.classList.add("cart-img");
+
+            const itemInfo = document.createElement("p");
+            itemInfo.innerHTML = `<strong>${item.title}</strong> - $${(item.price * item.quantity).toFixed(2)}`;
+
+            const qtyContainer = document.createElement("div");
+            qtyContainer.classList.add("qty-container");
+
+            const decreaseBtn = document.createElement("button");
+            decreaseBtn.textContent = "-";
+            decreaseBtn.classList.add("btn-decrease");
+            decreaseBtn.addEventListener("click", () => {
+                const itemIndex = cartItems.findIndex(i => i.title === item.title);
+                if (itemIndex !== -1) {
+                    cartItems[itemIndex].quantity -= 1;
+                    if (cartItems[itemIndex].quantity <= 0) {
+                        cartItems.splice(itemIndex, 1);
+                    }
+                    localStorage.setItem("cart", JSON.stringify(cartItems));
+                    updateCart();
+                }
+            });
+
+            const qtyDisplay = document.createElement("span");
+            qtyDisplay.textContent = `Qty: ${item.quantity}`;
+            qtyDisplay.classList.add("qty-display");
+
+            const increaseBtn = document.createElement("button");
+            increaseBtn.textContent = "+";
+            increaseBtn.classList.add("btn-increase");
+            increaseBtn.addEventListener("click", () => {
+                const itemIndex = cartItems.findIndex(i => i.title === item.title);
+                if (itemIndex !== -1) {
+                    cartItems[itemIndex].quantity += 1;
+                    localStorage.setItem("cart", JSON.stringify(cartItems));
+                    updateCart();
+                }
+            });
+
+            const removeBtn = document.createElement("button");
+            removeBtn.textContent = "Remove";
+            removeBtn.classList.add("btn-remove");
+            removeBtn.addEventListener("click", () => {
+                cartItems = cartItems.filter(i => i.title !== item.title);
+                localStorage.setItem("cart", JSON.stringify(cartItems));
+                updateCart();
+            });
+
+            qtyContainer.append(decreaseBtn, qtyDisplay, increaseBtn);
+            cartItem.append(itemImage, itemInfo, qtyContainer, removeBtn);
+            cartList.appendChild(cartItem);
+
+            total += parseFloat(item.price) * item.quantity;
+        });
+    }
+
+    totalAmount.innerHTML = `<strong>Total: $${total.toFixed(2)}</strong>`;
+}
+
+      
+        function searchItems() {
+    const searchBar = document.querySelector(".search-bar"); 
+    const query = searchBar.value.trim().toLowerCase(); 
+
+    if (!query) {
+        updateCart(cartItems);
+        return;
+    }
+
+    const filteredItems = cartItems.filter(item => 
+        item.title && item.title.toLowerCase().includes(query) 
+    );
+
+    updateCart(filteredItems);
+}
+let orderedItems = [];
+
+function placeOrder() {
+    if (cartItems.length === 0) {
+        alert("Your cart is empty. Please add items before placing an order.");
+    } else {
+        orderedItems = JSON.parse(JSON.stringify(cartItems)); 
+        showCustomAlert("Order placed successfully! 🎉");
+
+        cartItems = [];
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+        updateCart();
+        document.querySelector(".order-summary").style.display = "none";
+    }
+}
+
+function trackOrder() {
+    if (orderedItems.length === 0) {
+        alert("No order to track. Please place an order first.");
+        return;
+    }
+
+    const orderSummary = document.querySelector(".order-summary");
+    const orderList = document.querySelector(".order-list");
+    orderList.innerHTML = "";
+
+    orderedItems.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.title} - Qty: ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`;
+        orderList.appendChild(li);
+    });
+
+    orderSummary.style.display = "block";
+}
+function showCustomAlert(message) {
+    const alertBox = document.getElementById("custom-alert");
+    const alertText = document.getElementById("alert-text");
+    alertText.textContent = message;
+    alertBox.style.display = "block";
+
+    setTimeout(() => {
+        alertBox.style.display = "none";
+    }, 3000); // hides after 3s
+}
+
+
+        function updateQuantity(title, change) {
+            let itemIndex = cartItems.findIndex(item => item.title === title);
+            if (itemIndex !== -1 && cartItems[itemIndex].quantity + change > 0) {
+                cartItems[itemIndex].quantity += change;
+                localStorage.setItem("cart", JSON.stringify(cartItems));
+                updateCart();
+            }
+        }
+    
+        function removeItemFromCart(title) {
+            cartItems = cartItems.filter(item => item.title !== title);
+            localStorage.setItem("cart", JSON.stringify(cartItems));
+            updateCart();
+        }
+        wishlistIcon.addEventListener("click", () => {
+            window.location.href = "wishlist.html";
+        });
+        searchBar.addEventListener("keyup", searchItems);
+    
+        updateCart();
+
+       
+
+    </script>
+    
+</body>
+</html>

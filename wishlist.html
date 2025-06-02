@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- FontAwesome -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: linear-gradient(to right, #fec5cc, #ee9ca7);
+    padding: 12px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+
+        .back-link {
+            text-decoration: none;
+            color: #ff4d4d;
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #ef3e3e;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-bar {
+            padding: 8px 12px;
+            width: 250px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 18px;
+            outline: none;
+            transition: box-shadow 0.3s;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+        .cart-icon {
+            cursor: pointer;
+            font-size: 26px;
+            color: #ff4d4d;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .cart-icon:hover {
+            color: #d43f3f;
+        }
+
+        .wishlist-container {
+            max-width: 800px;
+            margin: 80px auto 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .wishlist-item {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .wishlist-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        .wishlist-item h3 {
+            font-size: 16px;
+            color: #444;
+        }
+
+        .wishlist-item p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .wishlist-item button {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .wishlist-item button:hover {
+            background: darkred;
+        }
+
+        .add-to-cart-btn {
+            background: green;
+        }
+
+        .add-to-cart-btn:hover {
+            background: darkgreen;
+        }
+        /* Extra Small (XS): Up to 575.98px */
+@media (max-width: 575.98px) {
+    .navbar {
+        flex-direction: row;
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+.back-link{
+    font-size: 18px;
+}
+.cart-icon{
+    font-size: 20px;
+}
+    .nav-right {
+        flex-direction: row;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .search-bar {
+        width: 100%;
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    .wishlist-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wishlist-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .wishlist-item h3 {
+        font-size: 14px;
+    }
+
+    .wishlist-item p,
+    .wishlist-item button {
+        font-size: 12px;
+    }
+}
+
+/* Small (SM): 576px to 767.98px */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .navbar {
+        padding: 10px 20px;
+    }
+
+    .search-bar {
+        width: 200px;
+        font-size: 16px;
+    }
+
+    .wishlist-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .wishlist-item img {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+/* Medium (MD): 768px to 991.98px */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .navbar {
+        padding: 10px 25px;
+    }
+
+    .search-bar {
+        width: 220px;
+    }
+
+    .wishlist-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Large (LG): 992px to 1199.98px */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .wishlist-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="home.html" class="back-link">← Back to Shop</a>
+        <div class="nav-right">
+            <input type="text" class="search-bar" placeholder="Search for items..." onkeyup="searchItems()">
+            <i class="fas fa-shopping-cart cart-icon" onclick="redirectToCart()"></i>
+        </div>
+    </nav>
+
+    <div class="wishlist-container">
+        <h1>Your Wishlist ❤️</h1>
+        <div id="wishlist-items" class="wishlist-grid"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+            const wishlistContainer = document.getElementById("wishlist-items");
+
+            if (wishlist.length === 0) {
+                wishlistContainer.innerHTML = "<p>Your wishlist is empty.</p>";
+                return;
+            }
+
+            renderWishlist(wishlist);
+        });
+
+        function renderWishlist(wishlist) {
+            const wishlistContainer = document.getElementById("wishlist-items");
+            wishlistContainer.innerHTML = wishlist.map(product => `
+                <div class="wishlist-item" data-title="${product.title.toLowerCase()}">
+                    <img src="${product.image}" alt="${product.title}">
+                    <h3>${product.title}</h3>
+                    <p>Price: $${product.price}</p>
+                    <button class="remove-btn" onclick="removeFromWishlist(${product.id})">Remove</button>
+                    <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `).join("");
+        }
+
+        function removeFromWishlist(productId) {
+            let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+            wishlist = wishlist.filter(item => item.id !== productId);
+            localStorage.setItem("wishlist", JSON.stringify(wishlist));
+            renderWishlist(wishlist);
+        }
+
+        function addToCart(productId) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            fetch("https://dreamystylesapi.onrender.com/products")
+                .then(response => response.json())
+                .then(products => {
+                    let product = products.find(p => p.id === productId);
+
+                    if (product) {
+                        let cartItem = cart.find(item => item.id === productId);
+
+                        if (cartItem) {
+                            cartItem.quantity += 1;
+                        } else {
+                            cart.push({ 
+                                id: product.id,
+                                title: product.title, 
+                                price: product.price, 
+                                image: product.image, 
+                                quantity: 1 
+                            });
+                        }
+
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        alert("✅ Item added to cart!");
+                    }
+                })
+                .catch(error => console.error("Error adding to cart:", error));
+        }
+
+        function searchItems() {
+            let input = document.querySelector(".search-bar").value.toLowerCase();
+            let items = document.querySelectorAll(".wishlist-item");
+
+            items.forEach(item => {
+                let title = item.getAttribute("data-title");
+                if (title.includes(input)) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        function redirectToCart() {
+            window.location.href = "cart.html";
+        }
+    </script>
+</body>
+</html>

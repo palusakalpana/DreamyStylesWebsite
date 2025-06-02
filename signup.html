@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreamy Styles</title>
+    <style>
+       @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    background: rgb(243, 227, 227);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    margin: 0;
+}
+
+.logo {
+    position: absolute;
+    top: 10px; 
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 36px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    z-index: 10;
+}
+
+.logo img {
+    width: 100%;  
+    height: 120px; 
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.signup-container {
+    background: linear-gradient(to right, #fec5cc, #ee9ca7);
+    padding: 30px;
+    margin-top: 8%; 
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(195, 24, 24, 0.1);
+    text-align: center;
+    width: 350px;
+    position: relative; 
+}
+
+h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 42px;
+    color: #ef3352;
+    margin-bottom: 15px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #ef3352;
+    box-shadow: 0 0 8px rgba(255, 117, 140, 0.5);
+}
+
+#signup-button {
+    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#signup-button:hover {
+    background: linear-gradient(to right, #ff7eb3, #ff958f);
+    box-shadow: 0 0 10px rgba(255, 117, 140, 0.7);
+}
+
+p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+p a {
+    color: #ef3352;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="images/logo.jpg" alt="Dreamy Styles Logo"> 
+    </div>
+    <div class="signup-container" id="signup-container">
+        <h2 id="signup-title">Sign Up</h2>
+        <form id="signup-form">
+            <div class="input-group">
+                <label for="rEmail">Email</label>
+                <input type="email" id="rEmail" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <label for="rPassword">Password</label>
+                <input type="password" id="rPassword" placeholder="Password" required>
+            </div>
+            <div class="input-group">
+                <label for="rePassword">Re-enter Password</label>
+                <input type="password" id="rePassword" placeholder="Re-enter Password" required>
+            </div>
+            <button type="submit" id="signup-button">Sign Up</button>
+        </form>
+        <p>Already have an account?<a href="index.html"> Sign in</a></p>
+    </div>
+
+    <script type="module">
+        // Import the Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyDedhWxkQhv2dwcMwUwNw1snMwGS9ZD5oI",
+          authDomain: "authentication-9f06e.firebaseapp.com",
+          projectId: "authentication-9f06e",
+          storageBucket: "authentication-9f06e.firebasestorage.app",
+          messagingSenderId: "215332518914",
+          appId: "1:215332518914:web:955a66dfe2a629a5d8bb1b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        let signupForm = document.getElementById("signup-form");
+
+        signupForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            let email = document.getElementById("rEmail").value;
+            let password = document.getElementById("rPassword").value;
+            let rePassword = document.getElementById("rePassword").value;
+
+            if (password !== rePassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    alert("Successfully signed up!");
+                    console.log("User:", user);
+                    signupForm.reset();
+                })
+                .catch((error) => {
+                    alert(error.message);
+                    console.log("Error:", error.message);
+                });
+        });
+    </script>
+</body>
+</html>

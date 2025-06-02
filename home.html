@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreamy Styles</title>
+    <link rel="stylesheet" href="home.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+</head>
+<body>
+    <header>
+        <div class="top-nav">
+            <div class="logo"><img src="images/logo.jpg" alt="Logo"></div>
+            <input type="text" class="search-bar" id="search" placeholder="Search..." onkeyup="searchProduct()">
+            <div class="icons">
+                <i class="fa-solid fa-heart icon" onclick="showWishlist()"></i>
+                <i class="fa-solid fa-cart-shopping icon" onclick="showCart()"></i>
+            </div>
+            
+        </div>
+        <nav>
+            <div class="hamburger" id="hamburger" onclick="toggleSidebar()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <div class="nav-links">
+                <button onclick="fetchProducts('all')">Home</button>
+                <button onclick="fetchProducts('men')">Men</button>
+                <button onclick="fetchProducts('women')">Women</button>
+                <button onclick="fetchProducts('electronics')">Electronics</button>
+                <button onclick="fetchProducts('jewelery')">Jewelery</button>
+                <button onclick="fetchProducts('footwear')">Footwear</button>
+
+            </div>
+        </nav>
+        <!-- Sidebar Menu -->
+        <div class="sidebar" id="sidebar">
+            <span class="close-btn" onclick="toggleSidebar()">&times;</span>
+            <h2>Filters</h2>
+            <div class="filter-group">
+                <label for="size">Size</label>
+                <select id="size">
+                    <option value="all">All</option>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="price-sort">Sort by Price</label>
+                <div class="price-options">
+                   
+                    <label>
+                        <input type="radio" name="price-sort" value="low-high">
+                        Low to High
+                    </label>
+                    <label>
+                        <input type="radio" name="price-sort" value="high-low">
+                        High to Low
+                    </label>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label for="color">Color</label>
+                <select id="color">
+                    <option value="all">All</option>
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="black">Black</option>
+                </select>
+            </div>
+        </div>
+        <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+    </header>
+    
+    
+    <div id="deals-section">
+        <h2>🔥 Best Deals of the Day</h2>
+        <p class="timer" id="countdown">Deal ends in: 2:00:00</p>
+
+        <!-- Swiper Carousel -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="images/off1.jpg" alt="Deal 1"></div>
+                <div class="swiper-slide"><img src="images/off2.jpg" alt="Deal 2"></div>
+                <div class="swiper-slide"><img src="images/off3.jpg" alt="Deal 3"></div>
+                <div class="swiper-slide"><img src="images/off4.jpg" alt="Deal 4"></div>
+                <div class="swiper-slide"><img src="images/off5.jpg" alt="Deal 5"></div>
+                <div class="swiper-slide"><img src="images/off6.jpg" alt="Deal 6"></div>
+                <div class="swiper-slide"><img src="images/off7.jpg" alt="Deal 7"></div>
+                <div class="swiper-slide"><img src="images/off10.jpg" alt="Deal 8"></div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+<!-- Styling Tips Section -->
+<div id="styling-tips">
+    <h2>✨ Styling Tips</h2>
+    <div class="swiper stylingSwiper">
+        <div class="swiper-wrapper">
+
+            <div class="swiper-slide tip-card">
+                <img src="images/jeans+kurthi.jpg" alt="Jeans with Kurti">
+                <h3>Jeans + Kurti</h3>
+                <p>Indo-western vibe with comfy jeans and a bold kurti.</p>
+            </div>
+
+            <div class="swiper-slide tip-card">
+                <img src="images/Blazer+tshirt.jpg" alt="Blazer with T-shirt">
+                <h3>Blazer + T-Shirt</h3>
+                <p>Pair a tee with a blazer to instantly glow-up your look.</p>
+            </div>
+
+            <div class="swiper-slide tip-card">
+                <img src="images/skirt+crop top.jpg" alt="Skirt with Crop Top">
+                <h3>Skirt + Crop Top</h3>
+                <p>Perfect balance of flow and fit. Great for day outings!</p>
+            </div>
+
+            <div class="swiper-slide tip-card">
+                <img src="images/Palazzo + Tank Top" alt="Palazzo with Tank Top">
+                <h3>Palazzo + Tank Top</h3>
+                <p>Casual summer classic for comfort and elegance.</p>
+            </div>
+
+            <div class="swiper-slide tip-card">
+                <img src="images/Denim + Dress.jpg" alt="Denim Jacket with Dress">
+                <h3>Denim + Dress</h3>
+                <p>Add a jacket to your dress for a street-style stunner.</p>
+            </div>
+
+            <div class="swiper-slide tip-card">
+                <img src="images/Joggers + Hoodie" alt="Joggers with Hoodie">
+                <h3>Joggers + Hoodie</h3>
+                <p>Trendy and cozy! Rock this combo for a sporty.</p>
+            </div>
+
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+
+
+    </div>
+    <div id="products-container"></div>
+    <main>
+        <div id="product-list"></div>
+    </main>
+    
+    <script src="home.js">
+        
+    </script>
+</body>
+</html>
+<!-- 
+ -->
+<!--  -->
