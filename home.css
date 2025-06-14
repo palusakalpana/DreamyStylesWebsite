@@ -499,9 +499,7 @@ nav {
     display: block;
     animation: fadeIn 0.3s ease-in-out;
 }
-/* main{
-    width: 100%;
-} */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -577,16 +575,34 @@ nav {
 /* Extra Small (XS): Up to 576px */
 @media (max-width: 576px) {
     
-    
+    .top-nav {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    .logo img {
+        width: 70px; /* smaller for tiny screens */
+    }
+
     .search-bar {
-        font-size: 12px;
+        flex: 1;
+        min-width: 0;
         padding: 6px;
+        font-size: 14px;
+        margin: 0 10px;
+    }
+
+    .icons {
+        gap: 10px;
+        flex-shrink: 0;
     }
 
     .icon {
         font-size: 18px;
     }
-
+    
     .tip-card {
         height: 400px;
     }
@@ -635,6 +651,7 @@ nav {
 
 }
 
+
 /* Small (SM): 576px to 768px */
 @media (min-width: 577px) and (max-width: 768px) {
     .nav-links {
@@ -650,13 +667,17 @@ nav {
         padding: 8px 12px;
     }
 
-    .search-bar {
-        font-size: 14px;
-        padding: 4px;
+    .top-nav {
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    .icon {
-        font-size: 15px;
+    .search-bar {
+        width: 80%;
+    }
+
+    .icons {
+        justify-content: flex-end;
     }
 
     .tip-card {
