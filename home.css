@@ -640,8 +640,8 @@ nav {
     .nav-links {
         /* flex-wrap: wrap; */
         display: flex;
-        margin-left: 42px;
-        gap: 10px;
+        margin-left: 40px;
+        gap: 8px;
         justify-content: center;
     }
 
@@ -652,11 +652,11 @@ nav {
 
     .search-bar {
         font-size: 14px;
-        padding: 8px;
+        padding: 4px;
     }
 
     .icon {
-        font-size: 20px;
+        font-size: 15px;
     }
 
     .tip-card {
